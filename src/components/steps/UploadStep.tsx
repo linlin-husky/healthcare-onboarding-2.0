@@ -27,14 +27,14 @@ export const UploadStep: React.FC = () => {
     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-300">
       {/* Hero Welcome Card */}
       <div className="text-center max-w-2xl mx-auto space-y-3">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold">
-          <ShieldCheck className="w-3.5 h-3.5" /> Smart 3-Minute Health Intake
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-emerald-500/20 via-teal-500/20 to-cyan-500/20 border border-emerald-500/30 text-emerald-300 text-xs font-bold shadow-sm">
+          <ShieldCheck className="w-4 h-4 text-emerald-400" /> Welcome! 3-Minute Friendly Health Intake
         </div>
-        <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-100 tracking-tight">
-          Let’s demystify your healthcare plan costs
+        <h1 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight leading-tight">
+          Health insurance clarity, <span className="bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400 bg-clip-text text-transparent">made human & easy</span> ✨
         </h1>
-        <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
-          Upload your health plan document to auto-populate your details, or proceed manually with guided assistance. We’ll show you <strong className="text-emerald-400">exact out-of-pocket prices</strong>.
+        <p className="text-slate-200 text-sm sm:text-base leading-relaxed font-medium">
+          Upload your SBC or EOB statement to auto-fill your profile in seconds — or walk through step-by-step with zero guesswork. We’ll calculate your <strong className="text-emerald-300">exact out-of-pocket costs</strong> in plain English!
         </p>
       </div>
 

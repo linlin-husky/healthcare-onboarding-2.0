@@ -75,6 +75,8 @@ interface OnboardingContextType {
   addPrescription: (rx: Omit<Prescription, 'id'>) => void;
   removePrescription: (id: string) => void;
   updateUpcomingCare: (data: Partial<UpcomingCareData>) => void;
+  themeMode: 'vivid' | 'clinical';
+  toggleThemeMode: () => void;
   applySampleDocument: (preset: SampleDocPreset) => void;
   applyAgentPreset: (preset: import('../data/agentDataPresets').AgentPreset) => void;
   loadVaultData: (vault: import('../data/encryptedVaultData').EncryptedVaultRecord) => void;
@@ -98,6 +100,17 @@ export const OnboardingProvider: React.FC<{ children: React.ReactNode }> = ({ ch
   });
 
   const [isAutoSaved, setIsAutoSaved] = useState(false);
+  const [themeMode, setThemeMode] = useState<'vivid' | 'clinical'>(() => {
+    return (localStorage.getItem('emme_theme_mode') as 'vivid' | 'clinical') || 'vivid';
+  });
+
+  const toggleThemeMode = () => {
+    setThemeMode(prev => {
+      const next = prev === 'vivid' ? 'clinical' : 'vivid';
+      localStorage.setItem('emme_theme_mode', next);
+      return next;
+    });
+  };
 
   // Auto-save to LocalStorage whenever state changes
   useEffect(() => {
@@ -289,6 +302,8 @@ export const OnboardingProvider: React.FC<{ children: React.ReactNode }> = ({ ch
         applySampleDocument,
         applyAgentPreset,
         loadVaultData,
+        themeMode,
+        toggleThemeMode,
         resetDraft,
         isAutoSaved
       }}

@@ -37,13 +37,28 @@ const StepRouter: React.FC = () => {
 };
 
 export const AppContent: React.FC = () => {
-  return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans selection:bg-emerald-500 selection:text-slate-950">
-      <Navigation />
+  const { themeMode } = useOnboarding();
 
-      <main className="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 py-8">
-        <StepRouter />
-      </main>
+  return (
+    <div className={`relative min-h-screen text-slate-100 flex flex-col font-sans selection:bg-emerald-400 selection:text-slate-950 overflow-x-hidden ${
+      themeMode === 'vivid' ? 'bg-slate-950' : 'bg-slate-900 border-t-2 border-cyan-500'
+    }`}>
+      {/* Friendly Vivid Floating Ambient Gradient Mesh Background (Active in Vivid Mode) */}
+      {themeMode === 'vivid' && (
+        <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+          <div className="absolute -top-40 -left-40 w-96 h-96 bg-emerald-500/15 rounded-full blur-[120px] animate-blob-1" />
+          <div className="absolute top-1/3 -right-40 w-[30rem] h-[30rem] bg-cyan-500/15 rounded-full blur-[130px] animate-blob-2" />
+          <div className="absolute -bottom-40 left-1/4 w-[32rem] h-[32rem] bg-purple-500/12 rounded-full blur-[140px] animate-blob-3" />
+          <div className="absolute top-1/2 left-10 w-72 h-72 bg-amber-500/10 rounded-full blur-[100px] animate-blob-1" />
+        </div>
+      )}
+
+      <div className="relative z-10 flex flex-col min-h-screen">
+        <Navigation />
+
+        <main className="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 py-8">
+          <StepRouter />
+        </main>
 
       <footer className="border-t border-slate-800/60 py-6 glass-panel bg-slate-950/80">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
@@ -72,6 +87,7 @@ export const AppContent: React.FC = () => {
           </div>
         </div>
       </footer>
+      </div>
     </div>
   );
 };
