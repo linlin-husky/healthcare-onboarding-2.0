@@ -76,6 +76,7 @@ interface OnboardingContextType {
   removePrescription: (id: string) => void;
   updateUpcomingCare: (data: Partial<UpcomingCareData>) => void;
   applySampleDocument: (preset: SampleDocPreset) => void;
+  applyAgentPreset: (preset: import('../data/agentDataPresets').AgentPreset) => void;
   resetDraft: () => void;
   isAutoSaved: boolean;
 }
@@ -114,11 +115,11 @@ export const OnboardingProvider: React.FC<{ children: React.ReactNode }> = ({ ch
   }, [state.identity, state.household, state.planDetails, state.costSharing, state.hsa, state.prescriptions, state.upcomingCare, state.documents, state.currentStep, state.uploadSkipped]);
 
   const setStep = (step: number) => {
-    setState(prev => ({ ...prev, currentStep: Math.max(0, Math.min(6, step)) }));
+    setState(prev => ({ ...prev, currentStep: Math.max(0, Math.min(7, step)) }));
   };
 
   const nextStep = () => {
-    setState(prev => ({ ...prev, currentStep: Math.min(6, prev.currentStep + 1) }));
+    setState(prev => ({ ...prev, currentStep: Math.min(7, prev.currentStep + 1) }));
   };
 
   const prevStep = () => {
@@ -201,6 +202,37 @@ export const OnboardingProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     }));
   };
 
+  const applyAgentPreset = (preset: import('../data/agentDataPresets').AgentPreset) => {
+    const now = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    const { identity, household, planDetails, costSharing, hsa, prescriptions, upcomingCare, autoFilledFields } = preset.onboardingData;
+
+    const formattedPrescriptions: Prescription[] = prescriptions.map((rx, idx) => ({
+      ...rx,
+      id: `a2a_rx_${Date.now()}_${idx}`
+    }));
+
+    setState(prev => ({
+      ...prev,
+      identity: { ...identity },
+      household: { ...household },
+      planDetails: { ...planDetails },
+      costSharing: { ...costSharing },
+      hsa: { ...hsa },
+      prescriptions: formattedPrescriptions,
+      upcomingCare: { ...upcomingCare },
+      documents: {
+        sbcFileName: `${preset.carrier.replace(/\s+/g, '_')}_A2A_Payload.json`,
+        sbcFileSize: '18 KB',
+        sbcUploadedAt: now,
+        extractedFromDoc: true,
+        extractionConfidence: 99,
+        autoFilledFields: autoFilledFields
+      },
+      uploadSkipped: false,
+      currentStep: 6 // Navigate directly to Confirmation Summary step
+    }));
+  };
+
   const resetDraft = () => {
     localStorage.removeItem(STORAGE_KEY);
     setState(defaultState);
@@ -223,6 +255,7 @@ export const OnboardingProvider: React.FC<{ children: React.ReactNode }> = ({ ch
         removePrescription,
         updateUpcomingCare,
         applySampleDocument,
+        applyAgentPreset,
         resetDraft,
         isAutoSaved
       }}

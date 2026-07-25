@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useOnboarding } from '../context/OnboardingContext';
 import { SAMPLE_DOCUMENTS } from '../data/sampleDocs';
-import { CheckCircle2, RotateCcw, Sparkles, Save, ShieldCheck } from 'lucide-react';
+import { AgentToAgentModal } from './AgentToAgentModal';
+import { CheckCircle2, RotateCcw, Sparkles, Save, ShieldCheck, Cpu } from 'lucide-react';
 
 const STEPS = [
   { id: 0, label: 'Document Upload' },
@@ -10,44 +11,55 @@ const STEPS = [
   { id: 3, label: 'Plan Details' },
   { id: 4, label: 'Cost-Sharing' },
   { id: 5, label: 'Care & Rx' },
-  { id: 6, label: 'Plan Summary' }
+  { id: 6, label: 'Medical Records AI' },
+  { id: 7, label: 'Plan Summary' }
 ];
 
 export const Navigation: React.FC = () => {
   const { state, setStep, applySampleDocument, resetDraft, isAutoSaved } = useOnboarding();
   const [showPresetDropdown, setShowPresetDropdown] = useState(false);
+  const [isA2AModalOpen, setIsA2AModalOpen] = useState(false);
 
   const progressPercent = Math.round((state.currentStep / (STEPS.length - 1)) * 100);
 
   return (
-    <header className="sticky top-0 z-40 glass-panel bg-slate-950/80 border-b border-slate-800/80 backdrop-blur-xl">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-3">
-        <div className="flex items-center justify-between gap-4">
-          {/* Brand */}
-          <div className="flex items-center gap-3">
-            <button
-              onClick={() => setStep(0)}
-              className="flex items-center gap-2.5 text-left group focus:outline-none"
-            >
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-emerald-500 to-cyan-400 flex items-center justify-center text-slate-950 font-extrabold text-lg shadow-lg shadow-emerald-500/20 group-hover:scale-105 transition-transform">
-                e
-              </div>
-              <div>
-                <div className="flex items-center gap-1.5">
-                  <span className="font-bold text-slate-100 tracking-tight text-lg group-hover:text-emerald-400 transition-colors">
-                    emme
-                  </span>
-                  <span className="text-[10px] uppercase font-bold tracking-widest px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                    Health Intake
-                  </span>
+    <>
+      <header className="sticky top-0 z-40 glass-panel bg-slate-950/80 border-b border-slate-800/80 backdrop-blur-xl">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-3">
+          <div className="flex items-center justify-between gap-4">
+            {/* Brand */}
+            <div className="flex items-center gap-3">
+              <button
+                onClick={() => setStep(0)}
+                className="flex items-center gap-2.5 text-left group focus:outline-none"
+              >
+                <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-emerald-500 to-cyan-400 flex items-center justify-center text-slate-950 font-extrabold text-lg shadow-lg shadow-emerald-500/20 group-hover:scale-105 transition-transform">
+                  e
                 </div>
-                <p className="text-[11px] text-slate-400 hidden sm:block">Healthcare Cost Transparency Engine</p>
-              </div>
-            </button>
-          </div>
+                <div>
+                  <div className="flex items-center gap-1.5">
+                    <span className="font-bold text-slate-100 tracking-tight text-lg group-hover:text-emerald-400 transition-colors">
+                      emme
+                    </span>
+                    <span className="text-[10px] uppercase font-bold tracking-widest px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                      Health Intake
+                    </span>
+                  </div>
+                  <p className="text-[11px] text-slate-400 hidden sm:block">Healthcare Cost Transparency Engine</p>
+                </div>
+              </button>
+            </div>
 
-          {/* Quick Demo Pre-fill Presets Dropdown */}
-          <div className="relative">
+            {/* AI Agent Sync & Sample Docs Actions */}
+            <div className="flex items-center gap-2.5">
+              {/* Agent-to-Agent (A2A) Button */}
+              <button
+                onClick={() => setIsA2AModalOpen(true)}
+                className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-gradient-to-r from-cyan-500/20 via-indigo-500/20 to-emerald-500/20 hover:from-cyan-500/30 hover:to-emerald-500/30 border border-cyan-500/40 text-cyan-300 text-xs font-bold shadow-md shadow-cyan-500/10 transition-all hover:scale-105"
+              >
+                <Cpu className="w-3.5 h-3.5 text-cyan-400 animate-pulse" />
+                <span>🤖 A2A Agent Sync</span>
+              </button>
             <button
               onClick={() => setShowPresetDropdown(!showPresetDropdown)}
               className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-gradient-to-r from-emerald-500/10 to-cyan-500/10 hover:from-emerald-500/20 hover:to-cyan-500/20 border border-emerald-500/30 text-emerald-300 text-xs font-semibold shadow-sm transition-all"
@@ -172,5 +184,11 @@ export const Navigation: React.FC = () => {
         </div>
       </div>
     </header>
+
+    <AgentToAgentModal
+      isOpen={isA2AModalOpen}
+      onClose={() => setIsA2AModalOpen(false)}
+    />
+    </>
   );
 };

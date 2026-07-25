@@ -7,6 +7,7 @@ import { HouseholdStep } from './components/steps/HouseholdStep';
 import { PlanDetailsStep } from './components/steps/PlanDetailsStep';
 import { CostSharingStep } from './components/steps/CostSharingStep';
 import { CareAndRxStep } from './components/steps/CareAndRxStep';
+import { MedicalRecordExplainerStep } from './components/steps/MedicalRecordExplainerStep';
 import { ConfirmationSummary } from './components/steps/ConfirmationSummary';
 import { ShieldCheck } from 'lucide-react';
 
@@ -27,6 +28,8 @@ const StepRouter: React.FC = () => {
     case 5:
       return <CareAndRxStep />;
     case 6:
+      return <MedicalRecordExplainerStep />;
+    case 7:
       return <ConfirmationSummary />;
     default:
       return <UploadStep />;
