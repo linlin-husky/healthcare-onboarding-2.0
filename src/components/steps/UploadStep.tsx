@@ -115,8 +115,8 @@ export const UploadStep: React.FC = () => {
             </div>
 
             {/* Quick Demo Pre-load sample buttons */}
-            <div className="mt-6 pt-5 border-t border-slate-800">
-              <div className="flex items-center justify-between mb-3">
+            <div className="mt-6 pt-5 border-t border-slate-800 space-y-4">
+              <div className="flex items-center justify-between">
                 <span className="text-xs font-semibold text-slate-300 flex items-center gap-1.5">
                   <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
                   Don't have a file handy? Try a sample document:

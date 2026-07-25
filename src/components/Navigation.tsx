@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { useOnboarding } from '../context/OnboardingContext';
 import { SAMPLE_DOCUMENTS } from '../data/sampleDocs';
 import { AgentToAgentModal } from './AgentToAgentModal';
-import { CheckCircle2, RotateCcw, Sparkles, Save, ShieldCheck, Cpu } from 'lucide-react';
+import { SecureVaultModal } from './SecureVaultModal';
+import { CheckCircle2, RotateCcw, Sparkles, Save, ShieldCheck, Cpu, Lock } from 'lucide-react';
 
 const STEPS = [
   { id: 0, label: 'Document Upload' },
@@ -19,6 +20,7 @@ export const Navigation: React.FC = () => {
   const { state, setStep, applySampleDocument, resetDraft, isAutoSaved } = useOnboarding();
   const [showPresetDropdown, setShowPresetDropdown] = useState(false);
   const [isA2AModalOpen, setIsA2AModalOpen] = useState(false);
+  const [isVaultModalOpen, setIsVaultModalOpen] = useState(false);
 
   const progressPercent = Math.round((state.currentStep / (STEPS.length - 1)) * 100);
 
@@ -50,15 +52,24 @@ export const Navigation: React.FC = () => {
               </button>
             </div>
 
-            {/* AI Agent Sync & Sample Docs Actions */}
+            {/* AI Agent Sync, Vault & Sample Docs Actions */}
             <div className="flex items-center gap-2.5">
+              {/* Encrypted Vault ID Button */}
+              <button
+                onClick={() => setIsVaultModalOpen(true)}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 text-xs font-bold transition-all"
+              >
+                <Lock className="w-3.5 h-3.5 text-emerald-400" />
+                <span>🔒 Vault Access</span>
+              </button>
+
               {/* Agent-to-Agent (A2A) Button */}
               <button
                 onClick={() => setIsA2AModalOpen(true)}
                 className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-gradient-to-r from-cyan-500/20 via-indigo-500/20 to-emerald-500/20 hover:from-cyan-500/30 hover:to-emerald-500/30 border border-cyan-500/40 text-cyan-300 text-xs font-bold shadow-md shadow-cyan-500/10 transition-all hover:scale-105"
               >
                 <Cpu className="w-3.5 h-3.5 text-cyan-400 animate-pulse" />
-                <span>🤖 A2A Agent Sync</span>
+                <span className="hidden sm:inline">🤖 A2A Sync</span>
               </button>
             <button
               onClick={() => setShowPresetDropdown(!showPresetDropdown)}
@@ -188,6 +199,11 @@ export const Navigation: React.FC = () => {
     <AgentToAgentModal
       isOpen={isA2AModalOpen}
       onClose={() => setIsA2AModalOpen(false)}
+    />
+
+    <SecureVaultModal
+      isOpen={isVaultModalOpen}
+      onClose={() => setIsVaultModalOpen(false)}
     />
     </>
   );

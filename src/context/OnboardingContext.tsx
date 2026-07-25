@@ -77,6 +77,7 @@ interface OnboardingContextType {
   updateUpcomingCare: (data: Partial<UpcomingCareData>) => void;
   applySampleDocument: (preset: SampleDocPreset) => void;
   applyAgentPreset: (preset: import('../data/agentDataPresets').AgentPreset) => void;
+  loadVaultData: (vault: import('../data/encryptedVaultData').EncryptedVaultRecord) => void;
   resetDraft: () => void;
   isAutoSaved: boolean;
 }
@@ -233,6 +234,37 @@ export const OnboardingProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     }));
   };
 
+  const loadVaultData = (vault: import('../data/encryptedVaultData').EncryptedVaultRecord) => {
+    const now = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    const { identity, household, planDetails, costSharing, hsa, prescriptions, upcomingCare, autoFilledFields } = vault.payload;
+
+    const formattedPrescriptions: Prescription[] = prescriptions.map((rx, idx) => ({
+      ...rx,
+      id: `vault_rx_${Date.now()}_${idx}`
+    }));
+
+    setState(prev => ({
+      ...prev,
+      identity: { ...identity },
+      household: { ...household },
+      planDetails: { ...planDetails },
+      costSharing: { ...costSharing },
+      hsa: { ...hsa },
+      prescriptions: formattedPrescriptions,
+      upcomingCare: { ...upcomingCare },
+      documents: {
+        sbcFileName: `Vault_${vault.vaultId}.aes256`,
+        sbcFileSize: '24 KB',
+        sbcUploadedAt: now,
+        extractedFromDoc: true,
+        extractionConfidence: 100,
+        autoFilledFields: autoFilledFields
+      },
+      uploadSkipped: false,
+      currentStep: 7 // Navigate to Plan Summary step
+    }));
+  };
+
   const resetDraft = () => {
     localStorage.removeItem(STORAGE_KEY);
     setState(defaultState);
@@ -256,6 +288,7 @@ export const OnboardingProvider: React.FC<{ children: React.ReactNode }> = ({ ch
         updateUpcomingCare,
         applySampleDocument,
         applyAgentPreset,
+        loadVaultData,
         resetDraft,
         isAutoSaved
       }}
