@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useOnboarding } from '../../context/OnboardingContext';
 import { Tooltip } from '../Tooltip';
+import { StepAssistantTip } from '../StepAssistantTip';
 import { Pill, Calendar, Plus, Trash2, HeartPulse, Baby, Brain, ArrowRight, ArrowLeft, Check } from 'lucide-react';
 
 const COMMON_CHRONIC_CONDITIONS = [
@@ -70,6 +71,12 @@ export const CareAndRxStep: React.FC = () => {
 
   return (
     <div className="max-w-2xl mx-auto space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-300">
+      <StepAssistantTip
+        title="Prescriptions & Upcoming Care Needs"
+        description="Adding your current medications and planned care helps us cross-reference drug formulary tiers and specialist copays!"
+        plainEnglishExplanation="Different plans categorize medications into Tier 1 (Generic), Tier 2 (Preferred Brand), or Tier 3. Listing your medications tells us if your plan will cover them for a cheap $10 copay or full price!"
+      />
+
       <div className="text-center space-y-2">
         <h2 className="text-2xl font-bold text-slate-100">Prescriptions & Upcoming Care</h2>
         <p className="text-xs sm:text-sm text-slate-400">

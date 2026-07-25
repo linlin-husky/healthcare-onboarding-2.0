@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useOnboarding } from '../../context/OnboardingContext';
 import { Tooltip } from '../Tooltip';
 import { DocumentLocatorModal } from '../DocumentLocatorModal';
+import { StepAssistantTip } from '../StepAssistantTip';
+import { LiveCostEstimatorWidget } from '../LiveCostEstimatorWidget';
 import { PiggyBank, ArrowRight, ArrowLeft, BookOpen } from 'lucide-react';
 
 export const CostSharingStep: React.FC = () => {
@@ -38,6 +40,16 @@ export const CostSharingStep: React.FC = () => {
 
   return (
     <div className="max-w-3xl mx-auto space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-300">
+      {/* Friendly Step Guidance Tip */}
+      <StepAssistantTip
+        title="Understanding Cost-Sharing: Deductibles, Copays & Out-of-Pocket Limits"
+        description="Don't worry if these terms look confusing! Entering your deductibles and copays helps us calculate your exact cost for doctor visits, emergency care, and medications."
+        plainEnglishExplanation="Your Deductible is what you pay first out-of-pocket before insurance helps. A Copay is a fixed dollar fee (like $25 for a doctor visit). Once you hit your Out-of-Pocket Max, your insurance pays 100% of everything else!"
+      />
+
+      {/* Interactive Live Cost Estimator Widget */}
+      <LiveCostEstimatorWidget costSharing={state.costSharing} />
+
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-2xl font-bold text-slate-100">Cost-Sharing & HSA Accumulators</h2>

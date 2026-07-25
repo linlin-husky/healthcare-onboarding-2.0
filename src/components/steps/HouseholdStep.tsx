@@ -1,6 +1,7 @@
 import React from 'react';
 import { useOnboarding } from '../../context/OnboardingContext';
 import { Tooltip } from '../Tooltip';
+import { StepAssistantTip } from '../StepAssistantTip';
 import { Users, DollarSign, FileCheck, ArrowRight, ArrowLeft } from 'lucide-react';
 
 const INCOME_RANGES = [
@@ -30,6 +31,13 @@ export const HouseholdStep: React.FC = () => {
 
   return (
     <div className="max-w-xl mx-auto space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-300">
+      {/* Step Assistant Tip */}
+      <StepAssistantTip
+        title="Why Household & Income Info Matters"
+        description="Your household size and income range help determine if you qualify for government premium subsidies, ACA savings, or family deductible caps!"
+        plainEnglishExplanation="If your household size is 2 or more, insurance companies automatically double your deductible limits. Plus, your income range checks if you get discount savings on your monthly bill."
+      />
+
       <div className="text-center space-y-2">
         <h2 className="text-2xl font-bold text-slate-100">Household & Income Profile</h2>
         <p className="text-xs sm:text-sm text-slate-400">

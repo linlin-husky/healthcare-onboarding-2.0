@@ -1,6 +1,7 @@
 import React from 'react';
 import { useOnboarding } from '../../context/OnboardingContext';
 import { Tooltip } from '../Tooltip';
+import { StepAssistantTip } from '../StepAssistantTip';
 import { Shield, Sparkles, ArrowRight, ArrowLeft, Award, Layers } from 'lucide-react';
 
 const CARRIERS = [
@@ -41,6 +42,13 @@ export const PlanDetailsStep: React.FC = () => {
 
   return (
     <div className="max-w-2xl mx-auto space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-300">
+      {/* Step Assistant Tip */}
+      <StepAssistantTip
+        title="Selecting Your Plan Carrier & Structure"
+        description="Selecting your insurance carrier (like BCBS, UHC, or Kaiser) and plan type (PPO, HMO, EPO, or HDHP) unlocks exact in-network copay rules!"
+        plainEnglishExplanation="PPO plans give you freedom to see any specialist without a doctor's note. HMO plans cost less per month but require a primary doctor referral. HDHP plans let you save tax-free money in an HSA!"
+      />
+
       <div className="text-center space-y-2">
         <h2 className="text-2xl font-bold text-slate-100">Health Plan Specifications</h2>
         <p className="text-xs sm:text-sm text-slate-400">

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useOnboarding } from '../../context/OnboardingContext';
 import { Tooltip } from '../Tooltip';
+import { StepAssistantTip } from '../StepAssistantTip';
 import { User, Mail, MapPin, ArrowRight, ArrowLeft } from 'lucide-react';
 
 export const IdentityStep: React.FC = () => {
@@ -18,6 +19,13 @@ export const IdentityStep: React.FC = () => {
 
   return (
     <div className="max-w-xl mx-auto space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-300">
+      {/* Step Assistant Tip */}
+      <StepAssistantTip
+        title="Welcome! Starting with Basic Profile Details"
+        description="Your zip code allows us to calculate exact local hospital network rates and in-area doctor pricing."
+        plainEnglishExplanation="Healthcare rates vary significantly by region. Entering your zip code connects your health plan to your local hospitals and pharmacies!"
+      />
+
       <div className="text-center space-y-2">
         <h2 className="text-2xl font-bold text-slate-100">Let’s start with basic contact info</h2>
         <p className="text-xs sm:text-sm text-slate-400">
