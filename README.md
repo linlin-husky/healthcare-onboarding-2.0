@@ -1,39 +1,32 @@
-# healthcare-onboarding-2.0
-Emme Health-Plan Onboarding — Starter Scaffold
+# React + TypeScript + Vite
 
-What it is: A working (not just mockup) multi-step onboarding wizard for the Track 2 challenge — manual entry path, document upload path, auto-save, plain-language help text, a summary screen, and JSON export. Backend is FastAPI, frontend is a single-file React app (no build tools needed).
+This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
 
-File layout:
+Currently, two official plugins are available:
 
-emme-onboarding/
-├── backend/
-│   ├── main.py            ← FastAPI app: sessions, autosave, upload/extract, submit
-│   └── requirements.txt
-└── frontend/
-    └── index.html          ← the entire wizard UI, runs straight in a browser
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
 
-How to run it — 2 terminals:
+## React Compiler
 
-Terminal 1 — backend:
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-bash
-cd emme-onboarding/backend
-pip install -r requirements.txt --break-system-packages
-uvicorn main:app --reload --port 8000
+## Expanding the Oxlint configuration
 
-Confirm it's up: visit http://localhost:8000/health → should show {"status":"healthy"}
+If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
 
-Terminal 2 — frontend:
+```json
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["react", "typescript", "oxc"],
+  "options": {
+    "typeAware": true
+  },
+  "rules": {
+    "react/rules-of-hooks": "error",
+    "react/only-export-components": ["warn", { "allowConstantExport": true }]
+  }
+}
+```
 
-bash
-cd emme-onboarding/frontend
-python3 -m http.server 5500
-
-Open http://localhost:5500 in your browser (or your phone, same wifi, using your computer's local IP instead of localhost).
-
-What to try:
-
-Click through the manual screens
-On the "documents" step, upload any file — it currently returns realistic sample plan data so the autofill demo works even before a real extraction model is wired in
-Reach the end to see the "here's what we know" summary + raw JSON export
-Refresh mid-flow — it resumes automatically
+See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.

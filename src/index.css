@@ -1,0 +1,92 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import "tailwindcss";
+
+:root {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  color-scheme: light dark;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #0d1117;
+  color: #f3f4f6;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #161b22;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #30363d;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #484f58;
+}
+
+/* Animations */
+@keyframes laserScan {
+  0% {
+    top: 0%;
+    opacity: 0.8;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    top: 100%;
+    opacity: 0.8;
+  }
+}
+
+.animate-laser {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, rgba(56, 189, 248, 0) 0%, rgba(56, 189, 248, 1) 50%, rgba(56, 189, 248, 0) 100%);
+  box-shadow: 0 0 15px #38bdf8, 0 0 30px #38bdf8;
+  animation: laserScan 2s ease-in-out infinite alternate;
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 35px rgba(16, 185, 129, 0.45);
+  }
+}
+
+.glow-emerald {
+  animation: pulseGlow 3s infinite;
+}
+
+/* Glassmorphism utils */
+.glass-panel {
+  background: rgba(22, 27, 34, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-card {
+  background: rgba(30, 41, 59, 0.6);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+/* JSON Code Highlight styling */
+pre code {
+  font-family: 'JetBrains Mono', monospace;
+}
